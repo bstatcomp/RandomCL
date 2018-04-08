@@ -2,9 +2,13 @@
 
 RandomCL is an OpenCL library for generating random numbers paralell. It contains implementations of more than 20 random number generators.
 
+# License
+
+RandomCL is released under BSD-3 license.
+
 # Building 
 
-Library itself does not need to be built - all code is contained in headers. Examples, performaceTests and qualityTests can be built using makefile (TODO).
+Library itself does not need to be built - all code is contained in headers. Examples can be built using makefile (TODO).
 
 ### Dependancies
 
