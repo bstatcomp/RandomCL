@@ -1,4 +1,4 @@
-/*
+/**
 * In this example we use OpenCL device to generate NUM 32-bit random numbers using a generator that 
 * saves its state in local memory. These are then transfered to host and printed.
 */

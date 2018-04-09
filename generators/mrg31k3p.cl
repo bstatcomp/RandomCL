@@ -1,3 +1,8 @@
+/**
+@file
+
+Implements mrg31k3p RNG.
+*/
 #pragma once
 
 #define RNG32
@@ -12,13 +17,19 @@
 #define MRG31K3P_MASK13 16777215
 #define MRG31K3P_MRG31K3P_MASK13 65535
 
+/**
+State of mrg31k3p RNG.
+*/
 typedef struct{
 	ulong x10, x11, x12, x20, x21, x22;
 } mrg31k3p_state;
 
-//different macro implementation does not make sense - RNG requires local variables
-#define mrg31k3p_uint(state) _mrg31k3p_uint(&state)
+/**
+Generates a random 32-bit unsigned integer using mrg31k3p RNG.
 
+@param state State of the RNG to use.
+*/
+#define mrg31k3p_uint(state) _mrg31k3p_uint(&state)
 uint _mrg31k3p_uint(mrg31k3p_state* state){
 	ulong y1, y2;
 	//first component
@@ -62,10 +73,12 @@ uint _mrg31k3p_uint(mrg31k3p_state* state){
 	}
 }
 
-float mrg31k3p_float(mrg31k3p_state* state){
-	return _mrg31k3p_uint(state) * MRG31K3P_FLOAT_MULTI;
-}
+/**
+Seeds mrg31k3p RNG.
 
+@param state Variable, that holds state of the generator to be seeded.
+@param seed Value used for seeding. Should be randomly generated for each instance of generator (thread).
+*/
 void mrg31k3p_seed(mrg31k3p_state* state, ulong j){
 	state->x10 = j;
 	state->x11 = j;
@@ -83,10 +96,32 @@ void mrg31k3p_seed(mrg31k3p_state* state, ulong j){
 	if (state->x20 > MRG31K3P_M2) state->x20 -= MRG31K3P_M2;
 	if (state->x21 > MRG31K3P_M2) state->x21 -= MRG31K3P_M2;
 	if (state->x22 > MRG31K3P_M2) state->x22 -= MRG31K3P_M2;
-	
 }
 
+/**
+Generates a random 64-bit unsigned integer using mrg31k3p RNG.
+
+@param state State of the RNG to use.
+*/
 #define mrg31k3p_ulong(state) ((((ulong)mrg31k3p_uint(state)) << 32) | mrg31k3p_uint(state))
+
+/**
+Generates a random float using mrg31k3p RNG.
+
+@param state State of the RNG to use.
+*/
 #define mrg31k3p_float(state) (mrg31k3p_uint(state)*MRG31K3P_FLOAT_MULTI)
+
+/**
+Generates a random double using mrg31k3p RNG.
+
+@param state State of the RNG to use.
+*/
 #define mrg31k3p_double(state) (mrg31k3p_ulong(state)*MRG31K3P_DOUBLE2_MULTI + mrg31k3p_ulong(state)*MRG31K3P_DOUBLE_MULTI)
+
+/**
+Generates a random double using mrg31k3p RNG. Generated using only 32 random bits.
+
+@param state State of the RNG to use.
+*/
 #define mrg31k3p_double2(state) (mrg31k3p_uint(state)*MRG31K3P_DOUBLE2_MULTI)

@@ -1,5 +1,10 @@
 /*
- * In this example we use OpenCL device to generate NUM 32-bit random numbers. These are then transfered to host and printed.
+ * In this example we use OpenCL device to generate NUM 32-bit random numbers. These are then transfered to host 
+ * and printed.
+ 
+* This example uses tyche_i generator. Any other generator from the library could be used (except one
+* that requires local memory for storing its state - xorshift1024) simply by replacing all occurances
+* of "tyche_i" with the name of desired generator in the kernel source.
  */
 
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS // cl.hpp
@@ -35,12 +40,6 @@ using namespace std;
 #define NUM 2000
 
 #define COMPILE_OPTS "-I " GENERATOR_LOCATION
-
-/*
-* This example uses tyche_i generator. Any other generator from the library could be used (except one
-* that requires local memory for storing its state - xorshift1024) simply by replacing all occurances
-*  of "tyche_i" with the name of desired generator in following kernel source.
-*/
 
 static string kernelSource =
 "#include <tyche_i.cl>\n"

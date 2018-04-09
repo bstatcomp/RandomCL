@@ -1,3 +1,8 @@
+/**
+@file
+
+Implements mrg63k3a RNG.
+*/
 #pragma once
 
 #define MRG63K3A_FLOAT_MULTI 1.0842021724855051562312e-19f
@@ -18,10 +23,18 @@
 #define MRG63K3A_Q23   1487847900
 #define MRG63K3A_R23   985240079
 
+/**
+State of mrg63k3a RNG.
+*/
 typedef struct{
 	long s10, s11, s12, s20, s21, s22;
 } mrg63k3a_state;
 
+/**
+Internal function. Advances state of mrg63k3a RNG and returns generated number.
+
+@param state Pointer to state of the RNG to use.
+*/
 ulong mrg63k3a_advance(mrg63k3a_state* state){
 	long h, p12, p13, p21, p23;
 	/* Component 1 */
@@ -65,15 +78,32 @@ ulong mrg63k3a_advance(mrg63k3a_state* state){
 		return p12 - p21 + MRG63K3A_M1;
 }
 
-//different macro implementation does not make sense - RNG requires local variables
+
+/**
+Generates a random 64-bit unsigned integer using mrg63k3a RNG.
+
+@param state State of the RNG to use.
+*/
 #define mrg63k3a_ulong(state) (mrg63k3a_advance(&state) << 1)//_mrg63k3a_ulong(&state)
 //mrg63k3a generates only 63 random bits - MSB is always 0. We shift output, since TestU01 ignores LSB.
 ulong _mrg63k3a_ulong(mrg63k3a_state* state){
 	return mrg63k3a_advance(state) << 1;
 }
+/**
+Generates a random 64-bit unsigned integer using mrg63k3a RNG.
 
+This, is an alternative implementation of mrg63k3a that does not shift output. Upper-most bit will always be 0.
+
+@param state State of the RNG to use.
+*/
 #define mrg63k3a_noshift_ulong(state) mrg63k3a_advance(&state)
 
+/**
+Seeds mrg63k3a RNG.
+
+@param state Variable, that holds state of the generator to be seeded.
+@param seed Value used for seeding. Should be randomly generated for each instance of generator (thread).
+*/
 void mrg63k3a_seed(mrg63k3a_state* state, ulong j){
 	state->s10 = j;
 	state->s11 = j;
@@ -88,7 +118,30 @@ void mrg63k3a_seed(mrg63k3a_state* state, ulong j){
 	
 }
 
+/**
+Generates a random 32-bit unsigned integer using mrg63k3a RNG.
+
+@param state State of the RNG to use.
+*/
 #define mrg63k3a_uint(state) ((uint)mrg63k3a_ulong(state))
+
+/**
+Generates a random float using mrg63k3a RNG.
+
+@param state State of the RNG to use.
+*/
 #define mrg63k3a_float(state) (mrg63k3a_ulong(state)*MRG63K3A_FLOAT_MULTI)
+
+/**
+Generates a random double using mrg63k3a RNG.
+
+@param state State of the RNG to use.
+*/
 #define mrg63k3a_double(state) (mrg63k3a_ulong(state)*MRG63K3A_DOUBLE_MULTI)
+
+/**
+Generates a random double using mrg63k3a RNG. Since mrg63k3a returns 64-bit numbers this is equivalent to mrg63k3a_double.
+
+@param state State of the RNG to use.
+*/
 #define mrg63k3a_double2(state) mrg63k3a_double(state)

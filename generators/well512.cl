@@ -1,3 +1,10 @@
+/**
+@file
+
+Implements a 512-bit WELL (Well-Equidistributed Long-period Linear) RNG.
+*/
+
+/* ind(mm,x) is bits 2..9 of x, or (floor(x/4) mod 256)*4 */
 #pragma once
 #define RNG32
 
@@ -12,6 +19,9 @@
 #define M2 9
 #define M3 5
 
+/**
+State of WELL RNG.
+*/
 typedef struct{
 	unsigned int s[R];
 	unsigned int i;
@@ -35,6 +45,13 @@ typedef struct{
 #define WELL512MACRO_z0(state) VRm1_(state)
 #define WELL512MACRO_z1(state) (MAT0NEG(-16,V0_(state)) ^ MAT0NEG(-15, VM1_(state)))
 #define WELL512MACRO_z2(state) (MAT0POS(11, VM2_(state)))
+/**
+Generates a random 32-bit unsigned integer using WELL RNG.
+
+This is alternative, macro implementation of WELL RNG.
+
+@param state State of the RNG to use.
+*/
 #define well512_macro_uint(state) (\
 	newV1_(state) = WELL512MACRO_z1(state) ^ WELL512MACRO_z2(state), \
 	newV0_(state) = MAT0NEG(-2,WELL512MACRO_z0(state)) ^ MAT0NEG(-18,WELL512MACRO_z1(state)) ^ MAT3NEG(-28,WELL512MACRO_z2(state)) ^ MAT4NEG(-5,0xda442d24U,newV1_(state)), \
@@ -52,8 +69,12 @@ typedef struct{
 #define newV1         state->s[state->i                   ]
 #define newVRm1       state->s[(state->i+14) & 0x0000000fU]
 
-#define well512_uint(state) _well512_uint(&state)
+/**
+Generates a random 32-bit unsigned integer using WELL RNG.
 
+@param state State of the RNG to use.
+*/
+#define well512_uint(state) _well512_uint(&state)
 uint _well512_uint(well512_state* state){
 	unsigned int z0, z1, z2;
 	z0    = VRm1;
@@ -65,12 +86,12 @@ uint _well512_uint(well512_state* state){
 	return state->s[state->i];
 }
 
-/*
-double well512_double(well512_state* state){
-	return ((double) well512_uint(state)) * WELL512_DOUBLE_MULTI;
-}
-*/
+/**
+Seeds WELL RNG.
 
+@param state Variable, that holds state of the generator to be seeded.
+@param seed Value used for seeding. Should be randomly generated for each instance of generator (thread).
+*/
 void well512_seed(well512_state* state, unsigned long j){
     state->i = 0;
     for (int i = 0; i < R; i+=2){
@@ -80,7 +101,30 @@ void well512_seed(well512_state* state, unsigned long j){
 	}
 }
 
+/**
+Generates a random 64-bit unsigned integer using WELL RNG.
+
+@param state State of the RNG to use.
+*/
 #define well512_ulong(state) ((((ulong)well512_uint(state)) << 32) | well512_uint(state))
+
+/**
+Generates a random float using WELL RNG.
+
+@param state State of the RNG to use.
+*/
 #define well512_float(state) (well512_uint(state)*WELL512_FLOAT_MULTI)
+
+/**
+Generates a random double using WELL RNG.
+
+@param state State of the RNG to use.
+*/
 #define well512_double(state) (well512_ulong(state)*WELL512_DOUBLE_MULTI)
+
+/**
+Generates a random double using WELL RNG. Generated using only 32 random bits.
+
+@param state State of the RNG to use.
+*/
 #define well512_double2(state) (well512_uint(state)*WELL512_DOUBLE2_MULTI)

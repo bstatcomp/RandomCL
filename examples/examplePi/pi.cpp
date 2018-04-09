@@ -1,7 +1,12 @@
-/*
+/**
+ * @file
  * This example shows how to use a random number generator to calculate pi. On OpenCL device random points
  * are generated in 2 dimensions with coordinates between 0 and 1. Ones within the unit circle are counted
  * to estimate area of the unit circle. Equation for area of a circle is used to calculate pi from this estimate.
+ 
+ * This example uses msws generator. Any other generator from the library could be used (except one
+ * that requires local memory for storing its state - xorshift1024) simply by replacing all occurances
+ * of "msws" with the name of desired generator in kernel source.
  */
 
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS // cl.hpp
@@ -37,12 +42,6 @@ using namespace std;
 #define ITERS_PER_THREAD 10000
 
 #define COMPILE_OPTS "-I " GENERATOR_LOCATION
-
-/*
- * This example uses msws generator. Any other generator from the library could be used (except one
- * that requires local memory for storing its state - xorshift1024) simply by replacing all occurances
- *  of "msws" with the name of desired generator in following kernel source.
- */
 
 static string kernelSource =
 "#include <msws.cl>\n"

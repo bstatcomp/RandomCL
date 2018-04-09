@@ -1,3 +1,8 @@
+/**
+@file
+
+Implements Mersenne twister generator. 
+*/
 #pragma once
 
 #define RNG32
@@ -12,13 +17,20 @@
 #define MT19937_UPPER_MASK 0x80000000 /* most significant w-r bits */
 #define MT19937_LOWER_MASK 0x7fffffff /* least significant r bits */
 
+/**
+State of MT19937 RNG.
+*/
 typedef struct{
 	uint mt[MT19937_N]; /* the array for the state vector  */
 	int mti;
 } mt19937_state;
 
-#define mt19937_uint(state) _mt19937_uint(&state)
+/**
+Generates a random 32-bit unsigned integer using MT19937 RNG.
 
+@param state State of the RNG to use.
+*/
+#define mt19937_uint(state) _mt19937_uint(&state)
 uint _mt19937_uint(mt19937_state* state){
     uint y;
     uint mag01[2]={0x0, MT19937_MATRIX_A};
@@ -47,7 +59,13 @@ uint _mt19937_uint(mt19937_state* state){
 
     return y;
 }
+/**
+Generates a random 32-bit unsigned integer using MT19937 RNG.
 
+This is alternative implementation of MT19937 RNG, that generates 32 values in single call.
+
+@param state State of the RNG to use.
+*/
 #define mt19937_loop_uint(state) _mt19937_loop_uint(&state)
 uint _mt19937_loop_uint(mt19937_state* state){
     uint y;
@@ -82,6 +100,12 @@ uint _mt19937_loop_uint(mt19937_state* state){
     return y;
 }
 
+/**
+Seeds MT19937 RNG.
+
+@param state Variable, that holds state of the generator to be seeded.
+@param seed Value used for seeding. Should be randomly generated for each instance of generator (thread).
+*/
 void mt19937_seed(mt19937_state* state, uint s){
     state->mt[0]= s;
 	uint mti;
@@ -96,7 +120,30 @@ void mt19937_seed(mt19937_state* state, uint s){
 	state->mti=mti;
 }
 
+/**
+Generates a random 64-bit unsigned integer using MT19937 RNG.
+
+@param state State of the RNG to use.
+*/
 #define mt19937_ulong(state) ((((ulong)mt19937_uint(state)) << 32) | mt19937_uint(state))
+
+/**
+Generates a random float using MT19937 RNG.
+
+@param state State of the RNG to use.
+*/
 #define mt19937_float(state) (mt19937_uint(state)*MT19937_FLOAT_MULTI)
+
+/**
+Generates a random double using MT19937 RNG.
+
+@param state State of the RNG to use.
+*/
 #define mt19937_double(state) (mt19937_ulong(state)*MT19937_DOUBLE_MULTI)
+
+/**
+Generates a random double using MT19937 RNG. Generated using only 32 random bits.
+
+@param state State of the RNG to use.
+*/
 #define mt19937_double2(state) (mt19937_uint(state)*MT19937_DOUBLE2_MULTI)
