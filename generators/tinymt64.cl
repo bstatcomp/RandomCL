@@ -2,6 +2,8 @@
 @file
 
 Implements RandomCL interface to tinymt64 RNG.
+
+Tiny mersenne twister, http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/TINYMT/index.html.
 */
 #pragma once
 

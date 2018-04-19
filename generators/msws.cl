@@ -2,6 +2,8 @@
 @file
 
 Implements msws (Middle Square Weyl Sequence) RNG.
+
+B. Widynski, Middle square weyl sequence rng, arXiv preprint arXiv:1704.00358. https://arxiv.org/abs/1704.00358
 */
 #pragma once
 

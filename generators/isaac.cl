@@ -2,6 +2,8 @@
 @file
 
 Implements ISAAC (Indirection, Shift, Accumulate, Add, and Count). Does not work on graphics cards, as it requires unaligned accesses to memory.
+
+R. J. Jenkins, Isaac, in: International Workshop on Fast Software Encryption, Springer, 1996, pp. 41–49.
 */
 
 /* ind(mm,x) is bits 2..9 of x, or (floor(x/4) mod 256)*4 */

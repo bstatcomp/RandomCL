@@ -2,6 +2,8 @@
 @file
 
 Implements Mersenne twister generator. 
+
+M. Matsumoto, T. Nishimura, Mersenne twister: a 623-dimensionally equidistributed uniform pseudo-random number generator, ACM Transactions on Modeling and Computer Simulation (TOMACS) 8 (1) (1998) 3–30.
 */
 #pragma once
 

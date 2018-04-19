@@ -2,6 +2,8 @@
 @file
 
 Implements a ran2 RNG.
+
+W. H. Press, Numerical recipes 3rd edition: The art of scientific computing, Cambridge university press, 2007.
 */
 #pragma once
 

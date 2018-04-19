@@ -2,6 +2,8 @@
 @file
 
 Implements philox2x32-10 RNG.
+
+J. K. Salmon, M. A. Moraes, R. O. Dror, D. E. Shaw, Parallel random numbers: as easy as 1, 2, 3, in: High Performance Computing, Networking, Storage and Analysis (SC), 2011 International Conference for, IEEE, 2011, pp. 1–12.
 */
 #pragma once
 

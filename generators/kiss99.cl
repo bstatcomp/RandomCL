@@ -2,6 +2,8 @@
 @file
 
 Implements KISS (Keep It Simple, Stupid) generator, proposed in 1999.
+
+G. Marsaglia, Random numbers for c: End, at last?, http://www.cse.yorku.ca/~oz/marsaglia-rng.html.
 */
 #pragma once
 #define RNG32

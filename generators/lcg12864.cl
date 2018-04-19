@@ -2,6 +2,8 @@
 @file
 
 Implements a 128-bit Linear Congruential Generator. Returns 64-bit numbers.
+
+P. L’ecuyer, Tables of linear congruential generators of different sizes and good lattice structure, Mathematics of Computation of the American Mathematical Society 68 (225) (1999) 249–260.
 */
 #pragma once
 

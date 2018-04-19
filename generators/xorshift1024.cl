@@ -5,22 +5,13 @@ Implements 1024-bit xorshift generator. State is shared between 32 threads. As i
 all threads of a work group must call the generator at the same time, even if they do not require the 
 result. In `localRNGs.h` header is the function `RNGLocal::xorshift1024_local_mem` that calculates required 
 state size given local size. See "examplePrintLocal". 
+
+M. Manssen, M. Weigel, A. K. Hartmann, Random number generators for massively parallel simulations on GPU, The European Physical Journal-Special Topics 210 (1) (2012) 53–71.
 */
 
 #pragma once
 #define RNG_LOCAL
 
-/*
-* Updates the RNG state in cooperation with in -warp neighbors.
-* Uses a block of shared memory of size
-* (XORSHIFT1024_WARPSIZE + XORSHIFT1024_WORDSHIFT + 1) * NWARPS + XORSHIFT1024_WORDSHIFT + 1.
-* Parameters:
-* state: RNG state
-* tid: thread index in block
-* stateblock: shared memory block for states
-* Returns:
-* updated state
-*/
 #define XORSHIFT1024_FLOAT_MULTI 2.3283064365386962890625e-10f
 #define XORSHIFT1024_DOUBLE2_MULTI 2.3283064365386962890625e-10
 #define XORSHIFT1024_DOUBLE_MULTI 5.4210108624275221700372640e-20

@@ -2,6 +2,8 @@
 @file
 
 Implements a 64-bit Permutated Congruential generator (PCG-XSH-RR).
+
+M. E. O’Neill, Pcg: A family of simple fast space-efficient statistically good algorithms for random number generation, ACM Transactions on Mathematical Software.
 */
 
 #pragma once

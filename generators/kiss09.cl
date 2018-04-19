@@ -2,6 +2,8 @@
 @file
 
 Implements KISS (Keep It Simple, Stupid) generator, proposed in 2009.
+
+G. Marsaglia, 64-bit kiss rngs, https://www.thecodingforums.com/threads/64-bit-kiss-rngs.673657.
 */
 #pragma once
 

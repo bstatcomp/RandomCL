@@ -2,6 +2,8 @@
 @file
 
 Implements a 512-bit tyche (Well-Equidistributed Long-period Linear) RNG.
+
+S. Neves, F. Araujo, Fast and small nonlinear pseudorandom number generators for computer simulation, in: International Conference on Parallel Processing and Applied Mathematics, Springer, 2011, pp. 92–101.
 */
 #pragma once
 

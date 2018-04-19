@@ -2,6 +2,8 @@
 @file
 
 Implements mrg31k3p RNG.
+
+P. L’Ecuyer, R. Touzin, Fast combined multiple recursive generators with multipliers of the form a=+-2 q+-2 r, in: Proceedings of the 32nd conference on Winter simulation, Society for Computer Simulation International, 2000, pp. 683–689.
 */
 #pragma once
 

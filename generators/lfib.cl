@@ -2,6 +2,8 @@
 @file
 
 Implements a Multiplicative Lagged Fibbonaci generator. Returns 64-bit random numbers, but the lowest bit is always 1.
+
+G. Marsaglia, L.-H. Tsay, Matrices and the structure of random number sequences, Linear algebra and its applications 67 (1985) 147–156.
 */
 #pragma once
 

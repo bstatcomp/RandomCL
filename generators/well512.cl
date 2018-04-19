@@ -2,6 +2,8 @@
 @file
 
 Implements a 512-bit WELL (Well-Equidistributed Long-period Linear) RNG.
+
+F. Panneton, P. L’ecuyer, M. Matsumoto, Improved long-period generators based on linear recurrences modulo 2, ACM Transactions on Mathematical Software (TOMS) 32 (1) (2006) 1–16.
 */
 
 /* ind(mm,x) is bits 2..9 of x, or (floor(x/4) mod 256)*4 */

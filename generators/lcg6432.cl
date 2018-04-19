@@ -2,6 +2,8 @@
 @file
 
 Implements a 512-bit lcg6432 (Well-Equidistributed Long-period Linear) RNG. Not recomended for serious use, as it does not pass BigCrush test.
+
+P. L’ecuyer, Tables of linear congruential generators of different sizes and good lattice structure, Mathematics of Computation of the American Mathematical Society 68 (225) (1999) 249–260.
 */
 #pragma once
 

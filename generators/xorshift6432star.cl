@@ -2,6 +2,8 @@
 @file
 
 Implements a 64-bit xorshift* generator that returns 32-bit values.
+
+S. Vigna, An experimental exploration of marsaglia’s xorshift generators, scrambled, ACM Transactions on Mathematical Software (TOMS) 42 (4) (2016) 30.
 */
 #pragma once
 #define RNG32

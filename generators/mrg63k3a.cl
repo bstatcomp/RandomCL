@@ -2,6 +2,8 @@
 @file
 
 Implements mrg63k3a RNG.
+
+P. L’ecuyer, Good parameters and implementations for combined multiple recursive random number generators, Operations Research 47 (1) (1999) 159–164.
 */
 #pragma once
 
