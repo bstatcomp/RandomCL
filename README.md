@@ -97,7 +97,7 @@ M. E. O’Neill, Pcg: A family of simple fast space-efficient statistically good
 
 Ran2 compound generator. Returns 64-bit numbers.
 
-W. H. Press, Numerical recipes 3rd edition: The art of scientific computing, Cambridge university press, 2007.
+W. H. Press, S. A. Teukolsky, W. T. Vetterling, B. P. Flannery, Numerical recipes in c: The art of scientific computing (; cambridge (1992).
 
 #### `kiss09`
 
