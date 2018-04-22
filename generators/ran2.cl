@@ -39,11 +39,11 @@ typedef struct{
 } ran2_state;
 
 /**
-Generates a random 64-bit unsigned integer using ran2 RNG.
+Generates a random 32-bit unsigned integer using ran2 RNG. The lowest bit is always 0.
 
 @param state State of the RNG to use.
 */
-#define ran2_uint(state) _ran2_uint(&state)
+#define ran2_uint(state) (_ran2_uint(&state)<<1)
 ulong _ran2_uint(ran2_state* state){
 	
 	int k = state->idum / IQ1;
@@ -73,6 +73,12 @@ ulong _ran2_uint(ran2_state* state){
 		return temp;
 	}*/
 }
+/**
+Generates a random 64-bit unsigned integer using ran2 RNG. The highest bit is always 0.
+
+@param state State of the RNG to use.
+*/
+#define ran2_unshifted_uint(state) _ran2_uint(&state)
 
 /**
 Seeds ran2 RNG.
@@ -84,19 +90,19 @@ void ran2_seed(ran2_state* state, ulong seed){
 	if(seed == 0){
 		seed = 1;
 	}
-	state->idum2 = seed;
+	state->idum = seed;
+	state->idum2 = seed>>32;
 	for(int j = NTAB + 7; j >= 0; j--){
-		int k = seed / IQ1;
-		seed = IA1 * (seed - k*IQ1) - k*IR1;
-		if(seed < 0){
-			seed += IM1;
+		short k = state->idum / IQ1;
+		state->idum = IA1 * (state->idum - k*IQ1) - k*IR1;
+		if(state->idum < 0){
+			state->idum += IM1;
 		}
 		if(j < NTAB){
-			state->iv[j] = seed;
+			state->iv[j] = state->idum;
 		}
 	}
 	state->iy = state->iv[0];
-	state->idum = seed;
 }
 
 /**
@@ -111,14 +117,14 @@ Generates a random float using ran2 RNG.
 
 @param state State of the RNG to use.
 */
-#define ran2_float(state) (ran2_ulong(state)*RAN2_FLOAT_MULTI)
+#define ran2_float(state) (ran2_uint(state)*RAN2_FLOAT_MULTI)
 
 /**
 Generates a random double using ran2 RNG.
 
 @param state State of the RNG to use.
 */
-#define ran2_double(state) (ran2_ulong(state)*RAN2_DOUBLE_MULTI)
+#define ran2_double(state) (ran2_ulong(state)*RAN2_DOUBLE2_MULTI + ran2_ulong(state)*RAN2_DOUBLE_MULTI)
 
 /**
 Generates a random double using ran2 RNG. Generated using only 32 random bits.
