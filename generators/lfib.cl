@@ -10,8 +10,6 @@ G. Marsaglia, L.-H. Tsay, Matrices and the structure of random number sequences,
 #define LFIB_FLOAT_MULTI 5.4210108624275221700372640e-20f
 #define LFIB_DOUBLE_MULTI 5.4210108624275221700372640e-20
 
-//http://www.sprng.org/Version5.0/parameters.html
-//Marsaglia: Matrices and the Structure of Random Number Sequences
 #define LFIB_LAG1 17
 #define LFIB_LAG2 5
 
@@ -20,7 +18,7 @@ State of lfib RNG.
 */
 typedef struct{
 	ulong s[LFIB_LAG1];
-	int p1,p2;
+	char p1,p2;
 }lfib_state;
 	
 /**
@@ -50,14 +48,14 @@ ulong _lfib_ulong(lfib_state* state){
 	state->p2%=LFIB_LAG2;*/
 	state->p1 = --state->p1 >= 0 ? state->p1 : LFIB_LAG1 - 1;
 	state->p2 = --state->p2 >= 0 ? state->p2 : LFIB_LAG1 - 1;
-	state->s[state->p1]*=state->s[state->p2];
+	state->s[state->p1] *= state->s[state->p2];
 	return state->s[state->p1];
 }
 
 /**
 Generates a random 64-bit unsigned integer using lfib RNG.
 
-This is alternative implementation of lfib RNG usinf if statements instead of ternary operators.
+This is alternative implementation of lfib RNG using if statements instead of ternary operators.
 
 @param state State of the RNG to use.
 */

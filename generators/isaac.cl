@@ -25,7 +25,7 @@ R. J. Jenkins, Isaac, in: International Workshop on Fast Software Encryption, Sp
 	*(r++) = b = ind(mm, y >> 8) + x; \
 }
 
-#define ISAAC_RANDSIZL   (4)
+#define ISAAC_RANDSIZL   (8)
 #define ISAAC_RANDSIZ    (1<<ISAAC_RANDSIZL)
 
 /**
@@ -90,12 +90,13 @@ Seeds ISAAC RNG.
 */
 void isaac_seed(isaac_state* state, ulong j){
 	state->aa = j;
-	state->bb = j;
-	state->cc = j;
+	state->bb = j ^ 123456789;
+	state->cc = j + 123456789;
 	state->idx = ISAAC_RANDSIZ;
-	for(int i=0;i<ISAAC_RANDSIZ+1;i++){
+	for(int i=0;i<ISAAC_RANDSIZ;i++){
+		j=6906969069UL * j + 1234567UL; //LCG
 		state->mm[i]=j;
-		isaac_advance(state);
+		//isaac_advance(state);
 	}
 }
 
