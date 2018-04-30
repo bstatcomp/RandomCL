@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
 	kernel.setArg(0, sizeof(num), &num);
 	kernel.setArg(1, cl_seed);
 	kernel.setArg(2, cl_res);
-	kernel.setArg(3, cl::Local(RNGLocal::xorshift1024_local_mem(LOCAL_SIZE) * sizeof(RNGLocal::xorshift1024_state))); //calculates amount of local memory needed from local size
+	kernel.setArg(3, cl::Local(randomCL::local::xorshift1024_local_mem(LOCAL_SIZE) * sizeof(randomCL::local::xorshift1024_state))); //calculates amount of local memory needed from local size
 	queue.enqueueNDRangeKernel(kernel, NULL, NDRange(N_THREADS), NDRange(LOCAL_SIZE));
 	vector<cl_uint> res(NUM);
 	queue.enqueueReadBuffer(cl_res, true, 0, NUM * sizeof(cl_uint), &res[0]);

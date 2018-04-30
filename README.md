@@ -8,11 +8,11 @@ RandomCL is released under the BSD-3 license.
 
 # Building 
 
-The library itself does not need to be built - all code is contained in headers. Examples can be built using a makefile (TODO).
+RNGs do not need to be built - all code is contained in headers. Examples and buffer generation can be built using a makefile (TODO).
 
 ### Dependencies
 
-- OpenCL library (examples, qualityTests and performanceTests require cpp OpenCL header).
+- OpenCL library (examples and buffer generation require cpp OpenCL header).
 
 # Documentation
 
@@ -22,7 +22,7 @@ All of these have a similar interface.
 
 The xorshift1024 generator, however, has the state shared between 32 threads. Since state is saved in local memory it has a slightly different interface.
 
-## Interface
+## OpenCL Interface
 
 Each generator is contained in its own header named `<NAME>.cl`. It defines the following type and functions, where `<NAME>` is the name of the generator:
 
@@ -176,3 +176,17 @@ J. K. Salmon, M. A. Moraes, R. O. Dror, D. E. Shaw, Parallel random numbers: as 
 1024-bit xorshift generator. State is shared between 32 threads. As it uses barriers, all threads of a work group must call the generator at the same time, even if they do not require the result. In `localRNGs.h` header is the function `RNGLocal::xorshift1024_local_mem` that calculates required state size given local size. See "examplePrintLocal". 
 
 M. Manssen, M. Weigel, A. K. Hartmann, Random number generators for massively parallel simulations on GPU, The European Physical Journal-Special Topics 210 (1) (2012) 53–71.
+
+## Buffer Generation
+
+### `cl::Buffer generateRandomBuffer(unsigned int num, std::string generatorName, cl::CommandQueue queue, size_t global, size_t local, std::string type = "float", unsigned long long seed = 0)`
+Generates a buffer of random numbers (on a fast device using this and reading random numbers from global memory can be significantly
+slower than generating numbers on-the-fly in kerner where they are used).
+
+`num` how many numbers to generate
+`generatorName` which RNG to use. Valid is any name of RNG implemented in RandomCL
+`queue` OpenCL CommandQueue to use
+`global` number of threads to use for generation
+`local` number of threads in a work group
+`type` type of numbers to generate. Valid options are: "float", "double", "uint", "ulong"
+`seed` set seed for repeatable generation.
