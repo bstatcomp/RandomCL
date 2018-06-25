@@ -22,11 +22,9 @@ typedef struct {
 /**
 Generates a random 64-bit unsigned integer using kiss09 RNG.
 
-This is alternative, macro implementation of kiss09 RNG.
-
 @param state State of the RNG to use.
 */
-#define kiss09_macro_ulong(state) (\
+#define kiss09_ulong(state) (\
 	/*multiply with carry*/ \
 	state.c = state.x >> 6, \
 	state.x += (state.x << 58) + state.c, \
@@ -43,10 +41,12 @@ This is alternative, macro implementation of kiss09 RNG.
 /**
 Generates a random 64-bit unsigned integer using kiss09 RNG.
 
+This is alternative implementation of kiss09 RNG as a function.
+
 @param state State of the RNG to use.
 */
-#define kiss09_ulong(state) _kiss09_ulong(&state)
-ulong _kiss09_ulong(kiss09_state* state){
+#define kiss09_func_ulong(state) _kiss09_func_ulong(&state)
+ulong _kiss09_func_ulong(kiss09_state* state){
 	//multiply with carry
 	ulong t = (state->x << 58) + state->c;
 	state->c = state-> x >>6;

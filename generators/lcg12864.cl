@@ -25,11 +25,9 @@ typedef struct{
 /**
 Generates a random 64-bit unsigned integer using lcg12864 RNG.
 
-This is alternative, macro implementation of lcg12864 RNG.
-
 @param state State of the RNG to use.
 */
-#define lcg12864_macro_ulong(state) ( \
+#define lcg12864_ulong(state) ( \
 	state.high = state.high * LCG12864_MULTI_LOW + state.low * LCG12864_MULTI_HIGH + mul_hi(state.low, LCG12864_MULTI_LOW), \
 	state.low = state.low * LCG12864_MULTI_LOW, \
 	state.low += LCG12864_INC_LOW, \
@@ -41,10 +39,12 @@ This is alternative, macro implementation of lcg12864 RNG.
 /**
 Generates a random 64-bit unsigned integer using lcg12864 RNG.
 
+This is alternative implementation of lcg12864 RNG as a function.
+
 @param state State of the RNG to use.
 */
-#define lcg12864_ulong(state) _lcg12864_ulong(&state)
-ulong _lcg12864_ulong(lcg12864_state* state){
+#define lcg12864_func_ulong(state) _lcg12864_func_ulong(&state)
+ulong _lcg12864_func_ulong(lcg12864_state* state){
 	state->high = state->high * LCG12864_MULTI_LOW + state->low * LCG12864_MULTI_HIGH + mul_hi(state->low, LCG12864_MULTI_LOW);
 	state->low = state->low * LCG12864_MULTI_LOW;
 

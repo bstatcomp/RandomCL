@@ -73,6 +73,52 @@ uint xorshift1024_uint(local xorshift1024_state* stateblock){
 }
 
 /**
+generates a random 32-bit unsigned integer using xorshift1024 RNG.
+
+This alternative implementation does not use thread synchronizations, so it might produce wrong results if subgroup size is lower than 32 on device it is executed on.
+
+@param stateblock pointer to buffer in local memory, that holds state of the generator.
+*/
+uint xorshift1024_no_sync_uint(local xorshift1024_state* stateblock){
+	/* Indices. */
+	int tid = get_local_id(0) + get_local_size(0) * (get_local_id(1) + get_local_size(1) * get_local_id(2));
+	int wid = tid / XORSHIFT1024_WARPSIZE; // Warp index in block
+	int lid = tid % XORSHIFT1024_WARPSIZE; // Thread index in warp
+	int woff = wid * (XORSHIFT1024_WARPSIZE + XORSHIFT1024_WORDSHIFT + 1) + XORSHIFT1024_WORDSHIFT + 1;
+	// warp offset
+	/* Shifted indices. */
+	int lp = lid + XORSHIFT1024_WORDSHIFT; // Left word shift
+	int lm = lid - XORSHIFT1024_WORDSHIFT; // Right word shift
+
+	uint state;
+	
+	/* << A. */
+	state = stateblock[woff + lid]; // Read states
+	state ^= stateblock[woff + lp] << XORSHIFT1024_RAND_A; // Left part
+	state ^= stateblock[woff + lp + 1] >> (XORSHIFT1024_WORD - XORSHIFT1024_RAND_A); // Right part
+	//barrier(CLK_LOCAL_MEM_FENCE);
+
+	/* >> B. */
+	stateblock[woff + lid] = state; // Share states
+	barrier(CLK_LOCAL_MEM_FENCE);
+	state ^= stateblock[woff + lm - 1] << (XORSHIFT1024_WORD - XORSHIFT1024_RAND_B); // Left part
+	state ^= stateblock[woff + lm] >> XORSHIFT1024_RAND_B; // Right part
+	//barrier(CLK_LOCAL_MEM_FENCE);
+
+	/* << C. */
+	stateblock[woff + lid] = state; // Share states
+	barrier(CLK_LOCAL_MEM_FENCE);
+	state ^= stateblock[woff + lp] << XORSHIFT1024_RAND_C; // Left part
+	state ^= stateblock[woff + lp + 1] >> (XORSHIFT1024_WORD - XORSHIFT1024_RAND_C); // Right part
+	//barrier(CLK_LOCAL_MEM_FENCE);
+
+	stateblock[woff + lid] = state; // Share states
+	//barrier(CLK_LOCAL_MEM_FENCE);
+	
+	return state;
+}
+
+/**
 Seeds xorshift1024 RNG
 
 @param stateblock Buffer in local memory, that holds state of the generator to be seeded.

@@ -24,7 +24,7 @@ typedef struct{
 /**
 Generates a random 64-bit unsigned integer using lfib RNG.
 
-This is alternative, macro implementation of lfib RNG.
+This is alternative, macro implementation of lfib RNG using ternary operators instead of if statements.
 
 @param state State of the RNG to use.
 */
@@ -38,10 +38,12 @@ This is alternative, macro implementation of lfib RNG.
 /**
 Generates a random 64-bit unsigned integer using lfib RNG.
 
+This is alternative implementation of lfib RNG using ternary operators instead of if statements.
+
 @param state State of the RNG to use.
 */
-#define lfib_ulong(state) _lfib_ulong(&state)
-ulong _lfib_ulong(lfib_state* state){
+#define lfib_ternary_ulong(state) _lfib_ternary_ulong(&state)
+ulong _lfib_ternary_ulong(lfib_state* state){
 	/*state->p1++;
 	state->p1%=LFIB_LAG1;
 	state->p2++;
@@ -55,12 +57,10 @@ ulong _lfib_ulong(lfib_state* state){
 /**
 Generates a random 64-bit unsigned integer using lfib RNG.
 
-This is alternative implementation of lfib RNG using if statements instead of ternary operators.
-
 @param state State of the RNG to use.
 */
-#define lfib_ifs_ulong(state) _lfib_ifs_ulong(&state)
-ulong _lfib_ifs_ulong(lfib_state* state){
+#define lfib_ulong(state) _lfib_ulong(&state)
+ulong _lfib_ulong(lfib_state* state){
 	/*state->p1++;
 	state->p1%=LFIB_LAG1;
 	state->p2++;
