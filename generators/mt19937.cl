@@ -112,7 +112,7 @@ void mt19937_seed(mt19937_state* state, uint s){
     state->mt[0]= s;
 	uint mti;
     for (mti=1; mti<MT19937_N; mti++) {
-        state->mt[mti] = (1812433253 * (state->mt[mti-1] ^ (state->mt[mti-1] >> 30)) + mti); 
+        state->mt[mti] = 1812433253 * (state->mt[mti-1] ^ (state->mt[mti-1] >> 30)) + mti;
 		
         /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
         /* In the previous versions, MSBs of the seed affect   */

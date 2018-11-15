@@ -33,7 +33,7 @@ Generates a random 32-bit unsigned integer using pcg6432 RNG.
 @param state State of the RNG to use.
 */
 #define pcg6432_uint(state) _pcg6432_uint(&state)
-unsigned long _pcg6432_uint(pcg6432_state* state){
+unsigned int _pcg6432_uint(pcg6432_state* state){
     ulong oldstate = *state;
 	*state = oldstate * 6364136223846793005UL + 0xda3e39cb94b95bdbUL;
 	uint xorshifted = ((oldstate >> 18u) ^ oldstate) >> 27u;

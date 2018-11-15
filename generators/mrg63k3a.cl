@@ -117,7 +117,6 @@ void mrg63k3a_seed(mrg63k3a_state* state, ulong j){
 		state->s10++;
 		state->s21++;
 	}
-	
 }
 
 /**
