@@ -82,12 +82,12 @@ Seeds mrg31k3p RNG.
 @param seed Value used for seeding. Should be randomly generated for each instance of generator (thread).
 */
 void mrg31k3p_seed(mrg31k3p_state* state, ulong j){
-	state->x10 = j;
-	state->x11 = j;
-	state->x12 = j;
-	state->x20 = j;
-	state->x21 = j;
-	state->x22 = j;
+	state->x10 = (uint)j;
+	state->x11 = (uint)j >> 5;
+	state->x12 = (uint)j >> 11;
+	state->x20 = (uint)j >> 22;
+	state->x21 = (uint)j >> 30;
+	state->x22 = (uint)j >> 33;
 	if(j == 0){
 		state->x10++;
 		state->x21++;
@@ -95,6 +95,15 @@ void mrg31k3p_seed(mrg31k3p_state* state, ulong j){
 	if (state->x10 > MRG31K3P_M1) state->x10 -= MRG31K3P_M1;
 	if (state->x11 > MRG31K3P_M1) state->x11 -= MRG31K3P_M1;
 	if (state->x12 > MRG31K3P_M1) state->x12 -= MRG31K3P_M1;
+	
+	if (state->x20 > MRG31K3P_M2) state->x20 -= MRG31K3P_M2;
+	if (state->x21 > MRG31K3P_M2) state->x21 -= MRG31K3P_M2;
+	if (state->x22 > MRG31K3P_M2) state->x22 -= MRG31K3P_M2;
+	
+	if (state->x10 > MRG31K3P_M1) state->x10 -= MRG31K3P_M1;
+	if (state->x11 > MRG31K3P_M1) state->x11 -= MRG31K3P_M1;
+	if (state->x12 > MRG31K3P_M1) state->x12 -= MRG31K3P_M1;
+	
 	if (state->x20 > MRG31K3P_M2) state->x20 -= MRG31K3P_M2;
 	if (state->x21 > MRG31K3P_M2) state->x21 -= MRG31K3P_M2;
 	if (state->x22 > MRG31K3P_M2) state->x22 -= MRG31K3P_M2;
