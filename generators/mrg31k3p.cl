@@ -23,7 +23,7 @@ P. L’Ecuyer, R. Touzin, Fast combined multiple recursive generators with multi
 State of mrg31k3p RNG.
 */
 typedef struct{
-	ulong x10, x11, x12, x20, x21, x22;
+	uint x10, x11, x12, x20, x21, x22;
 } mrg31k3p_state;
 
 /**
@@ -33,7 +33,7 @@ Generates a random 32-bit unsigned integer using mrg31k3p RNG.
 */
 #define mrg31k3p_uint(state) _mrg31k3p_uint(&state)
 uint _mrg31k3p_uint(mrg31k3p_state* state){
-	ulong y1, y2;
+	uint y1, y2;
 	//first component
 	y1 = (((state->x11 & MRG31K3P_MASK12) << 22) + (state->x11 >> 9)) + (((state->x12 & MRG31K3P_MASK13) << 7) + (state->x12 >> 24));
 	if (y1 > MRG31K3P_M1){ 

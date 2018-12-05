@@ -36,7 +36,7 @@ Generates a random 32-bit unsigned integer using lcg6432 RNG.
 @param state State of the RNG to use.
 */
 #define lcg6432_uint(state) _lcg6432_uint(&state)
-unsigned long _lcg6432_uint(lcg6432_state* state){
+unsigned int _lcg6432_uint(lcg6432_state* state){
 	*state = *state * 6364136223846793005UL + 0xda3e39cb94b95bdbUL;
 	return *state>>32;
 }
