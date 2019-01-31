@@ -1,6 +1,7 @@
 # RandomCL
 
-RandomCL is an OpenCL library for generating random numbers in parallel. It contains implementations of more than 20 random number generators.
+RandomCL is an OpenCL library for generating random numbers in parallel. It contains implementations of more than 20 random number generators. While it is intended for usage on graphics processing units (GPUs), the generators can run on any OpenCL-enabled device.
+The article (An OpenCL library for parallel random number generators)[https://link.springer.com/article/10.1007%2Fs11227-019-02756-2] contains further details about implementation and testing of the library.
 
 # License
 
@@ -184,9 +185,15 @@ Generates a buffer of random numbers (on a fast device using this and reading ra
 slower than generating numbers on-the-fly in kerner where they are used).
 
 `num` how many numbers to generate
+
 `generatorName` which RNG to use. Valid is any name of RNG implemented in RandomCL
+
 `queue` OpenCL CommandQueue to use
+
 `global` number of threads to use for generation
+
 `local` number of threads in a work group
+
 `type` type of numbers to generate. Valid options are: "float", "double", "uint", "ulong"
+
 `seed` set seed for repeatable generation.
