@@ -34,9 +34,9 @@ using namespace std;
 #define PLATFORM 0
 #define DEVICE 0
 #ifdef _WIN32
-#define GENERATOR_LOCATION "..\\generators\\"
+#define GENERATOR_LOCATION "..\\..\\generators\\"
 #else
-#define GENERATOR_LOCATION "../generators/"
+#define GENERATOR_LOCATION "../../generators/"
 #endif
 #define N_THREADS 1024*8
 #define ITERS_PER_THREAD 10000
