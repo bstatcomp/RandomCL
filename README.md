@@ -9,7 +9,7 @@ RandomCL is released under the BSD-3 license.
 
 # Building 
 
-RNGs do not need to be built - all code is contained in headers. Examples and buffer generation can be built using a makefile (TODO).
+RNGs do not need to be built - all code is contained in headers. Examples and buffer generation can be built using a makefile by running `make examples/examplePi/pi`, `make examples/examplePrint/print`, `make examples/examplePrintBuffer/printBuffe` or `make examples/examplePrintLocal/printLocal` and then running the created executable in the examples folder.
 
 ### Dependencies
 
