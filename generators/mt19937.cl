@@ -49,6 +49,7 @@ uint _mt19937_uint(mt19937_state* state){
 	else{
         y = (state->mt[MT19937_N-1]&MT19937_UPPER_MASK)|(state->mt[0]&MT19937_LOWER_MASK);
         state->mt[MT19937_N-1] = state->mt[MT19937_M-1] ^ (y >> 1) ^ mag01[y & 0x1];
+        state->mti = 0;
 	}
     y = state->mt[state->mti++];
 	state->mti %= MT19937_N;
