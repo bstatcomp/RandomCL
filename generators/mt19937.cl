@@ -52,7 +52,6 @@ uint _mt19937_uint(mt19937_state* state){
         state->mti = 0;
 	}
     y = state->mt[state->mti++];
-	state->mti %= MT19937_N;
 		
     /* Tempering */
     y ^= (y >> 11);
